@@ -1,10 +1,13 @@
 package com.example.practicadiypm2023
 
 import android.graphics.drawable.Drawable
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.ImageView
+import kotlin.concurrent.thread
 import kotlin.concurrent.timer
 import kotlin.random.Random
 
@@ -21,16 +24,24 @@ class Juego : AppCompatActivity() {
                                     ,R.drawable.mujerdurmiendo, R.drawable.mujervenus, R.drawable.mujerpelirroja)
 
         booleanos = mutableListOf<Boolean>(false, false, false, false, false, false, false, false, false, false, false, false)
-
     }
+    lateinit var cartaActual:ImageView
+    lateinit var cartaAnterior:ImageView
 
     fun cartaPulsada(view: View) {
+        if (::cartaActual.isInitialized) {
+            cartaAnterior = cartaActual
+        }
+        cartaActual = view as ImageView
+
+
         when(view.id){
             R.id.carta1->{
                 var cartanueva1 = findViewById<ImageView>(R.id.carta1)
                 if(!booleanos[0]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
                     booleanos[0]=true
                 }
@@ -40,6 +51,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[1]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
                     booleanos[1]=true
                 }
@@ -49,6 +61,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[2]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[2]=true
@@ -59,6 +72,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[3]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[3]=true
@@ -69,6 +83,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[4]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[4]=true
@@ -79,6 +94,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[5]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[5]=true
@@ -89,6 +105,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[6]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[6]=true
@@ -99,6 +116,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[7]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[7]=true
@@ -109,6 +127,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[8]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[8]=true
@@ -119,6 +138,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[9]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[9]=true
@@ -129,6 +149,7 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[10]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[10]=true
@@ -139,13 +160,30 @@ class Juego : AppCompatActivity() {
                 if(!booleanos[11]){
                     var img_nueva = imagenes.random()
                     cartanueva1.setImageResource(img_nueva)
+                    cartanueva1.tag = img_nueva.toString()
                     imagenes.remove(img_nueva)
 
                     booleanos[11]=true
                 }
             }
         }
+
+        if (::cartaAnterior.isInitialized) {
+            compararCartas(cartaAnterior, cartaActual)
+
+        }
     }
+    private fun compararCartas(cartaAnterior: ImageView, cartaActual: ImageView) {
+        val idAnterior = cartaAnterior.tag
+        val idActual = cartaActual.tag
+        if (idAnterior != idActual) {
+            cartaAnterior.postDelayed({
+                cartaAnterior.setImageResource(R.drawable.parteatras)
+                cartaActual.setImageResource(R.drawable.parteatras)
+            }, 1000)
+        }
+    }
+
 
     fun Reiniciar(view: View) {
         recreate()
