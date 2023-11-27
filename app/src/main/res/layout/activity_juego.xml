@@ -4,25 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Juego">
-<TextView
-    android:id="@+id/textGanar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text=""
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/layoutCarta1"
-    android:gravity="center"
-    android:textSize="20sp"
-    android:padding="18dp"
-    />
+    tools:context=".Juego"
+    android:background="@drawable/panatalla2">
+    <ImageView
+        android:src="@drawable/corazon"
+        android:textColor="@color/white"
+        android:id="@+id/imgVidas"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutCarta1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:adjustViewBounds="true"
+        />
+    <ImageView
+        android:src="@drawable/corazon"
+        android:textColor="@color/white"
+        android:id="@+id/imgVidas2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutCarta1"
+        app:layout_constraintStart_toEndOf="@id/imgVidas"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:adjustViewBounds="true"
+        />
+    <ImageView
+        android:src="@drawable/corazon"
+        android:textColor="@color/white"
+        android:id="@+id/imgVidas3"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutCarta1"
+        app:layout_constraintStart_toEndOf="@id/imgVidas2"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:adjustViewBounds="true"
+        />
+    <ImageView
+        android:src="@drawable/corazon"
+        android:textColor="@color/white"
+        android:id="@+id/imgVidas4"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutCarta1"
+        app:layout_constraintStart_toEndOf="@id/imgVidas3"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:adjustViewBounds="true"
+        />
+
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:text="Tiempo: 00:00"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/layoutCarta1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgVidas4"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/layoutCarta1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/layoutCarta2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/imgVidas">
 
         <ImageView
             android:id="@+id/carta1"
@@ -170,7 +229,19 @@
             android:src="@drawable/parteatras"
             android:onClick="cartaPulsada" />
     </LinearLayout>
-
+    <TextView
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        android:id="@+id/textGanar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/layoutCarta3"
+        app:layout_constraintBottom_toTopOf="@id/botonReiniciar"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="18dp"
+        />
 
     <Button
         android:id="@+id/botonReiniciar"
@@ -182,5 +253,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
