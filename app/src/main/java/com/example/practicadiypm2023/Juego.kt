@@ -118,6 +118,7 @@ class Juego : AppCompatActivity() {
 
             var texto = findViewById<TextView>(R.id.textGanar)
             texto.setText("Has perdido campeón")
+
         }
         }
             else if (contador == 2) {
