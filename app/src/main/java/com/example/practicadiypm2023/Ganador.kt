@@ -6,14 +6,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 
-class MainActivity : AppCompatActivity() {
-
+class Ganador : AppCompatActivity() {
+    var mediaPlayer:MediaPlayer?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+        setContentView(R.layout.activity_ganador)
 
-    fun Iniciar(view: View) {
+
+        mediaPlayer=MediaPlayer.create(this,R.raw.ibai)
+        mediaPlayer?.start()
+    }
+    fun Reiniciar(view: View) {
+
+        mediaPlayer?.stop()
         val intent= Intent(this, Juego::class.java)
         startActivity(intent)
     }

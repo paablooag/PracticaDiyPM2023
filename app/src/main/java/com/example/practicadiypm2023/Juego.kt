@@ -1,7 +1,9 @@
 package com.example.practicadiypm2023
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.media.Image
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -15,6 +17,8 @@ import kotlin.concurrent.timer
 import kotlin.random.Random
 
 class Juego : AppCompatActivity() {
+
+    var mediaPlayer:MediaPlayer ?= null
     private lateinit var imagenes:MutableList<Int>
     private lateinit var booleanos:MutableList<Boolean>
     private lateinit var countDownTimer: CountDownTimer
@@ -31,9 +35,10 @@ class Juego : AppCompatActivity() {
         booleanos = mutableListOf<Boolean>(false, false, false, false, false, false, false, false, false, false, false, false)
         imagenes.shuffle()
 
+        mediaPlayer=MediaPlayer.create(this,R.raw.melendiDrill)
+        mediaPlayer?.start()
 
     }
-
 
     lateinit var cartaActual:ImageView
     lateinit var cartaAnterior:ImageView
@@ -41,7 +46,6 @@ class Juego : AppCompatActivity() {
     var contador = 0
 
     fun cartaPulsada(view: View) {
-
             if (::cartaActual.isInitialized) {
                 cartaAnterior = cartaActual
             }
@@ -84,8 +88,6 @@ class Juego : AppCompatActivity() {
         val idAnterior = cartaAnterior.tag
         val idActual = cartaActual.tag
         var posicion = posicion
-        var posicionAnterior = posicionAnterior
-
 
             if (idAnterior != idActual && contador == 2) {
                 if(vidas>0) {
@@ -115,9 +117,9 @@ class Juego : AppCompatActivity() {
                     vidas--
                 }, 0)
         }else if (vidas==0){
+           val intent= Intent(this, Perdedor::class.java)
+           startActivity(intent)
 
-            var texto = findViewById<TextView>(R.id.textGanar)
-            texto.setText("Has perdido campeón")
 
         }
         }
@@ -126,16 +128,21 @@ class Juego : AppCompatActivity() {
                 booleanos[posicionAnterior] = true
                 cartaAnterior.tag = null
                 contador = 0
-                posicionAnterior = 0
                 contadorGanar++
                 if (contadorGanar == 6) {
-                    var texto = findViewById<TextView>(R.id.textGanar)
-                    texto.setText("Has ganado campeón")
+                    val intent= Intent(this, Ganador::class.java)
+                    startActivity(intent)
                 }
             }
 
     }
     fun Reiniciar(view: View) {
+        mediaPlayer?.stop()
         recreate()
+    }
+    override fun onBackPressed() {
+        mediaPlayer?.stop()
+        val intent= Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }

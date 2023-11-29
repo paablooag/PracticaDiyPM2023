@@ -237,7 +237,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
         android:onClick="Reiniciar"
-        android:text="❤ Reinicia mi corazon bebé ❤"
+        android:text="Reiniciar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
