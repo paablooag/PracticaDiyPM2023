@@ -88,6 +88,7 @@ class Juego : AppCompatActivity() {
         val idAnterior = cartaAnterior.tag
         val idActual = cartaActual.tag
         var posicion = posicion
+        var posicionAnterior = posicionAnterior
 
             if (idAnterior != idActual && contador == 2) {
                 if(vidas>0) {
