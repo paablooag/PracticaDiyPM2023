@@ -14,10 +14,10 @@ class Ganador : AppCompatActivity() {
 
 
         mediaPlayer=MediaPlayer.create(this,R.raw.ibai)
+        mediaPlayer?.seekTo(3000)
         mediaPlayer?.start()
     }
     fun Reiniciar(view: View) {
-
         mediaPlayer?.stop()
         val intent= Intent(this, Juego::class.java)
         startActivity(intent)

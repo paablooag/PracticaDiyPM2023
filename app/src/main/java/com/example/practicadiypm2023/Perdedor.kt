@@ -13,13 +13,12 @@ class Perdedor : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perdedor)
 
-        mediaPlayer=MediaPlayer.create(this,R.raw.mrJagger)
+        mediaPlayer=MediaPlayer.create(this,R.raw.mr)
 
         mediaPlayer?.start()
     }
 
     fun Reiniciar(view: View) {
-
         mediaPlayer?.stop()
         val intent= Intent(this, Juego::class.java)
         startActivity(intent)

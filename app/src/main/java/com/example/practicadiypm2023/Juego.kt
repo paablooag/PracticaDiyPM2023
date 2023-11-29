@@ -35,7 +35,7 @@ class Juego : AppCompatActivity() {
         booleanos = mutableListOf<Boolean>(false, false, false, false, false, false, false, false, false, false, false, false)
         imagenes.shuffle()
 
-        mediaPlayer=MediaPlayer.create(this,R.raw.melendiDrill)
+        mediaPlayer=MediaPlayer.create(this,R.raw.drill)
         mediaPlayer?.start()
 
     }
@@ -44,7 +44,6 @@ class Juego : AppCompatActivity() {
     lateinit var cartaAnterior:ImageView
     var posicionAnterior:Int? = null
     var contador = 0
-
     fun cartaPulsada(view: View) {
             if (::cartaActual.isInitialized) {
                 cartaAnterior = cartaActual
