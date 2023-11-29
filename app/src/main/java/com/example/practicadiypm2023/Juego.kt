@@ -36,6 +36,7 @@ class Juego : AppCompatActivity() {
         imagenes.shuffle()
 
         mediaPlayer=MediaPlayer.create(this,R.raw.drill)
+        mediaPlayer?.seekTo(6900)
         mediaPlayer?.start()
 
     }
@@ -116,6 +117,8 @@ class Juego : AppCompatActivity() {
                     vidas--
                 }, 0)
         }else if (vidas==0){
+
+            mediaPlayer?.stop()
            val intent= Intent(this, Perdedor::class.java)
            startActivity(intent)
 
@@ -129,6 +132,7 @@ class Juego : AppCompatActivity() {
                 contador = 0
                 contadorGanar++
                 if (contadorGanar == 6) {
+                    mediaPlayer?.stop()
                     val intent= Intent(this, Ganador::class.java)
                     startActivity(intent)
                 }
@@ -143,5 +147,9 @@ class Juego : AppCompatActivity() {
         mediaPlayer?.stop()
         val intent= Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+    override fun onStop() {
+        mediaPlayer?.stop()
+        super.onStop()
     }
 }

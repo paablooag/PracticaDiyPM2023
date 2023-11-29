@@ -14,7 +14,7 @@ class Perdedor : AppCompatActivity() {
         setContentView(R.layout.activity_perdedor)
 
         mediaPlayer=MediaPlayer.create(this,R.raw.mr)
-
+        mediaPlayer?.seekTo(20000)
         mediaPlayer?.start()
     }
 
@@ -22,5 +22,15 @@ class Perdedor : AppCompatActivity() {
         mediaPlayer?.stop()
         val intent= Intent(this, Juego::class.java)
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        mediaPlayer?.stop()
+        val intent= Intent(this, Juego::class.java)
+        startActivity(intent)
+    }
+    override fun onStop() {
+        mediaPlayer?.stop()
+        super.onStop()
     }
 }
