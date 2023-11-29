@@ -30,6 +30,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8147040574878773~6961166618"/>
 
+
+    </application>
+    <!-- For apps targeting Android 13 or higher & GMA SDK version 20.3.0 or lower -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 </manifest>
