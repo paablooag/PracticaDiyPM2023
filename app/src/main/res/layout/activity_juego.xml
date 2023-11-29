@@ -63,18 +63,6 @@
         android:adjustViewBounds="true"
         />
 
-    <TextView
-        android:id="@+id/timerTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:text="Tiempo: 00:00"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/layoutCarta1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgVidas4"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/layoutCarta1"
         android:layout_width="0dp"
