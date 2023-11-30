@@ -11,7 +11,7 @@
         android:id="@+id/temporizador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="0"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +37,32 @@
         app:layout_constraintTop_toBottomOf="@id/acertadas"
         android:layout_marginLeft="20dp"/>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/falladas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/operacionAntigua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6-6=0"
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/acertadas"
+            />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/tickverde"
+            android:adjustViewBounds="false"
+            android:layout_marginLeft="10dp"
+            />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fila4"
