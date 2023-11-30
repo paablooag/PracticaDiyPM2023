@@ -21,7 +21,6 @@ class Juego : AppCompatActivity() {
     var mediaPlayer:MediaPlayer ?= null
     private lateinit var imagenes:MutableList<Int>
     private lateinit var booleanos:MutableList<Boolean>
-    private lateinit var countDownTimer: CountDownTimer
     var contadorGanar = 0
     var vidas=4
     override fun onCreate(savedInstanceState: Bundle?) {

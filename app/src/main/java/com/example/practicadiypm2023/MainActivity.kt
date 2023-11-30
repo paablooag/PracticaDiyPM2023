@@ -27,4 +27,9 @@ class MainActivity : AppCompatActivity() {
         val intent= Intent(this, Juego::class.java)
         startActivity(intent)
     }
+
+    fun IniciarCalculaTron(view: View) {
+        val intent= Intent(this, CalculaTron::class.java)
+        startActivity(intent)
+    }
 }

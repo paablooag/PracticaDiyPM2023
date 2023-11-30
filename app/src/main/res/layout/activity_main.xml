@@ -8,17 +8,28 @@
     android:background="@drawable/pantalla1">
 
     <Button
+        android:id="@+id/botonIniciarMemory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
         android:onClick="Iniciar"
-        android:text="Iniciar juego"
+        android:text="MemoryTron"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:onClick="IniciarCalculaTron"
+        android:text="CalculaTron"
+        android:textSize="17sp"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/botonIniciarMemory"
         app:layout_constraintVertical_bias="0.499" />
 
     <com.google.android.gms.ads.AdView
