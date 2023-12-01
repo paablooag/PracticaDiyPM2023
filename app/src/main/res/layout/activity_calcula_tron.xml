@@ -38,6 +38,7 @@
         android:layout_marginLeft="20dp"/>
 
     <LinearLayout
+        android:id="@+id/operacionAntigua"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/falladas"
@@ -46,22 +47,22 @@
         android:gravity="center"
         >
         <TextView
-            android:id="@+id/operacionAntigua"
+            android:id="@+id/operacionAntigua2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="6-6=0"
+            android:text="6+6=12"
             android:textSize="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/acertadas"
             />
         <ImageView
+            android:id="@+id/imagenAciertoFallo"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:src="@drawable/tickverde"
             android:adjustViewBounds="false"
             android:layout_marginLeft="10dp"
             />
-
     </LinearLayout>
 
     <LinearLayout
@@ -74,6 +75,7 @@
         >
 
         <Button
+        android:id="@+id/cero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0"
@@ -83,6 +85,7 @@
         />
 
         <Button
+        android:id="@+id/c"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="C"
@@ -100,6 +103,7 @@
         app:layout_constraintStart_toStartOf="parent"
         >
         <Button
+            android:id="@+id/uno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="1"
@@ -108,6 +112,7 @@
             android:layout_weight="1"
             />
         <Button
+            android:id="@+id/dos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2"
@@ -116,6 +121,7 @@
             android:layout_weight="1"
             />
         <Button
+            android:id="@+id/tres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3"
@@ -133,6 +139,7 @@
         app:layout_constraintStart_toStartOf="parent"
         >
         <Button
+            android:id="@+id/cuatro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4"
@@ -141,6 +148,7 @@
             android:layout_weight="1"
             />
         <Button
+            android:id="@+id/cinco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="5"
@@ -149,6 +157,7 @@
             android:layout_weight="1"
             />
         <Button
+            android:id="@+id/seis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="6"
@@ -166,6 +175,7 @@
         app:layout_constraintStart_toStartOf="parent"
         >
         <Button
+            android:id="@+id/siete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="7"
@@ -174,6 +184,7 @@
             android:layout_weight="1"
             />
         <Button
+            android:id="@+id/ocho"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="8"
@@ -182,6 +193,7 @@
             android:layout_weight="1"
             />
         <Button
+            android:id="@+id/nueve"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="9"
@@ -202,6 +214,7 @@
         app:layout_constraintTop_toTopOf="@+id/fila1">
 
         <Button
+            android:id="@+id/ce"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="5dp"
@@ -210,6 +223,7 @@
             app:cornerRadius="0dp" />
 
         <Button
+            android:id="@+id/igual"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="5dp"
@@ -217,6 +231,27 @@
             android:text="="
             app:cornerRadius="0dp" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/operacionAzar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9+9="
+        android:textSize="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/operacionAntigua"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/operacionSiguiente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2+7="
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/operacionAzar"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
