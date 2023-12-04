@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import java.util.Random
 
@@ -15,6 +16,15 @@ class CalculaTron : AppCompatActivity() {
     private lateinit var operacionSiguiente:TextView
     private lateinit var operacionAntigua:TextView
     private lateinit var tutexta:TextView
+    private lateinit var image:ImageView
+    private lateinit var acertadasText:TextView
+    private lateinit var falladasText:TextView
+
+    var resop=0
+
+    var num1=0
+    var num2=0
+    var resprox=0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +33,9 @@ class CalculaTron : AppCompatActivity() {
         temporizadorTextView = findViewById(R.id.temporizador)
         operacionAntigua = findViewById(R.id.operacionAntigua2)
         tutexta=findViewById(R.id.tutexta)
+        image=findViewById(R.id.imagenAciertoFallo)
+        acertadasText=findViewById(R.id.acertadas)
+        falladasText=findViewById(R.id.falladas)
 
         empezarTemporizador()
 
@@ -32,14 +45,14 @@ class CalculaTron : AppCompatActivity() {
         val num1 = Random().nextInt(10)
         val num2 = Random().nextInt(10)
 
+        resop=num1+num2
         val operacion = "$num1 + $num2"
         operacionAzar.text = operacion
-
-        generarOperacionSiguiente()
-
     }
     var res=""
-    var proxres=""
+    var contador=0
+    var acertadas=0
+    var falladas=0
     fun botonNumero(view:View){
         when (view.id) {
             R.id.cero -> {
@@ -106,11 +119,40 @@ class CalculaTron : AppCompatActivity() {
             }
 
             R.id.igual -> {
-                operacionAntigua.text=operacionAzar.text
-                operacionAzar.text=operacionSiguiente.text
-                proxres=res
-                res=""
-                generarOperacionSiguiente()
+
+                operacionAntigua.text = "${operacionAzar.text} = $res"
+                operacionAzar.text = operacionSiguiente.text
+                if (contador == 0) {
+                    contador++
+
+                    if (resop == res.toInt()) {
+                        image.setImageResource(R.drawable.tickverde)
+                        acertadas++
+                        acertadasText.text = "Acertadas: $acertadas"
+                    } else {
+                        image.setImageResource(R.drawable.cruzroja)
+                        falladas++
+                        falladasText.text = "Falladas: $falladas"
+                    }
+                    generarOperacionSiguiente()
+
+                    res = ""
+                } else {
+
+                  if (resprox == res.toInt()) {
+                        image.setImageResource(R.drawable.tickverde)
+                        acertadas++
+                        acertadasText.text = "Acertadas: $acertadas"
+
+                    } else {
+                        image.setImageResource(R.drawable.cruzroja)
+                        falladas++
+                        falladasText.text = "Falladas: $falladas"
+                    }
+                    generarOperacionSiguiente()
+
+                    res = ""
+                }
             }
         }
     }
@@ -128,14 +170,18 @@ class CalculaTron : AppCompatActivity() {
         }
         temporizador?.start()
     }
-    private fun generarOperacionSiguiente(){
-        val num1=Random().nextInt(10)
-        val num2=Random().nextInt(10)
-        val operacion = "$num1 + $num2"
-        operacionSiguiente.text=operacion
-        var resop=num1+num2
-    }
 
+     private fun generarOperacionSiguiente(){
+         num1=Random().nextInt(10)
+         num2=Random().nextInt(10)
+         resprox=resop
+         resop=num1+num2
+
+
+         val operacion = "$num1 + $num2"
+
+         operacionSiguiente.text=operacion
+    }
 
 
 

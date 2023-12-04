@@ -75,7 +75,6 @@
             android:id="@+id/imagenAciertoFallo"
             android:layout_width="20dp"
             android:layout_height="match_parent"
-            android:src="@drawable/tickverde"
             android:adjustViewBounds="false"
             android:layout_marginLeft="10dp"
             />
