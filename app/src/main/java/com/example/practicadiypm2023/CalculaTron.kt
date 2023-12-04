@@ -21,10 +21,15 @@ class CalculaTron : AppCompatActivity() {
     private lateinit var falladasText:TextView
 
     var resop=0
-
     var num1=0
     var num2=0
     var resprox=0
+
+
+    var res=""
+    var contador=0
+    var acertadas=0
+    var falladas=0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +46,7 @@ class CalculaTron : AppCompatActivity() {
 
         operacionAzar = findViewById(R.id.operacionAzar)
         operacionSiguiente=findViewById(R.id.operacionSiguiente)
+        generarOperacionSiguiente()
 
         val num1 = Random().nextInt(10)
         val num2 = Random().nextInt(10)
@@ -49,10 +55,6 @@ class CalculaTron : AppCompatActivity() {
         val operacion = "$num1 + $num2"
         operacionAzar.text = operacion
     }
-    var res=""
-    var contador=0
-    var acertadas=0
-    var falladas=0
     fun botonNumero(view:View){
         when (view.id) {
             R.id.cero -> {
@@ -110,7 +112,6 @@ class CalculaTron : AppCompatActivity() {
                     res = res.substring(0, res.length - 1)
                 }
                 tutexta.text = res
-
             }
 
             R.id.ce -> {
@@ -124,7 +125,6 @@ class CalculaTron : AppCompatActivity() {
                 operacionAzar.text = operacionSiguiente.text
                 if (contador == 0) {
                     contador++
-
                     if (resop == res.toInt()) {
                         image.setImageResource(R.drawable.tickverde)
                         acertadas++
@@ -135,10 +135,9 @@ class CalculaTron : AppCompatActivity() {
                         falladasText.text = "Falladas: $falladas"
                     }
                     generarOperacionSiguiente()
-
                     res = ""
-                } else {
 
+                } else {
                   if (resprox == res.toInt()) {
                         image.setImageResource(R.drawable.tickverde)
                         acertadas++
@@ -170,7 +169,6 @@ class CalculaTron : AppCompatActivity() {
         }
         temporizador?.start()
     }
-
      private fun generarOperacionSiguiente(){
          num1=Random().nextInt(10)
          num2=Random().nextInt(10)
@@ -181,6 +179,7 @@ class CalculaTron : AppCompatActivity() {
          val operacion = "$num1 + $num2"
 
          operacionSiguiente.text=operacion
+
     }
 
 
