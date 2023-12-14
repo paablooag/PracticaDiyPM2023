@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Iniciar(view: View) {
-        val intent= Intent(this, Juego::class.java)
+        val intent= Intent(this, Juego1::class.java)
         startActivity(intent)
     }
 
     fun IniciarCalculaTron(view: View) {
-        val intent= Intent(this, CalculaTron::class.java)
+        val intent= Intent(this, Juego::class.java)
         startActivity(intent)
     }
 }

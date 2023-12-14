@@ -1,155 +1,405 @@
 package com.example.practicadiypm2023
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
-import android.media.Image
-import android.media.MediaPlayer
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
+import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.view.View
-import android.widget.AutoCompleteTextView
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import kotlin.concurrent.thread
-import kotlin.concurrent.timer
+import androidx.cardview.widget.CardView
+import androidx.core.text.isDigitsOnly
+import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.textfield.TextInputEditText
 import kotlin.random.Random
 
 class Juego : AppCompatActivity() {
 
-    var mediaPlayer:MediaPlayer ?= null
-    private lateinit var imagenes:MutableList<Int>
-    private lateinit var booleanos:MutableList<Boolean>
-    var contadorGanar = 0
-    var vidas=4
+    var numeroint=0
+    var numero=""
+    var respuesta=true
+    var res=0
+    var numero1=0
+    var numero2=0
+    var operaciones=0
+    lateinit var resultadoant: TextView
+    lateinit var resultado:TextView
+    lateinit var resultadoprox:TextView
+    lateinit var tutext:TextView
+    lateinit var check: ImageView
+    var acertadas=0
+    var falladas=0
+    var acertadasesta=0
+    var falladasesta=0
+    lateinit var aciertos:TextView
+    var proxres=0
+    var temporizador:CountDownTimer?=null
+    lateinit var cuentatras:TextView
+    lateinit var sharedPreferences:SharedPreferences
+    lateinit var intent1 : Intent
+    var durcntatras:Long=0
+    var valmin=0
+    var valmax=20
+    var sumas=true
+    var restas=true
+    var multiplicacion=true
+    var division=true
+    var temppause=false
+    var tmprestante:Long=0
+    var ajustesact=false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_juego)
-        imagenes = mutableListOf(R.drawable.melendi_0, R.drawable.melendi_1, R.drawable.melendi_2
-                                    ,R.drawable.melendi_3, R.drawable.melendi_4, R.drawable.melendi_5,
-            R.drawable.melendi_0, R.drawable.melendi_1, R.drawable.melendi_2
-            ,R.drawable.melendi_3, R.drawable.melendi_4, R.drawable.melendi_5)
+        resultadoant=findViewById(R.id.resultadoant)
+        resultado=findViewById(R.id.resultado)
+        resultadoprox=findViewById(R.id.resultadoprox)
+        tutext=findViewById(R.id.tutext)
+        check=findViewById(R.id.check)
+        aciertos=findViewById(R.id.resumen)
+        cuentatras=findViewById(R.id.cuentaAtras)
 
-        booleanos = mutableListOf<Boolean>(false, false, false, false, false, false, false, false, false, false, false, false)
-        imagenes.shuffle()
+        var drcntras=findViewById<TextInputEditText>(R.id.durcntatrs)
+        var vlmin=findViewById<TextInputEditText>(R.id.valmin)
+        var vlmax=findViewById<TextInputEditText>(R.id.valmax)
+        var checksumas=findViewById<CheckBox>(R.id.sumas)
+        var checkrestas=findViewById<CheckBox>(R.id.restas)
+        var checkmultiplicaciones=findViewById<CheckBox>(R.id.multiplicaciones)
+        var checkdivisiones=findViewById<CheckBox>(R.id.divisiones)
 
-        mediaPlayer=MediaPlayer.create(this,R.raw.drill)
-        mediaPlayer?.seekTo(6900)
-        mediaPlayer?.start()
+        sharedPreferences= getDefaultSharedPreferences(this)
+        durcntatras=sharedPreferences.getLong("cuentaatras",20000)
+        valmin=sharedPreferences.getInt("valmin",0)
+        valmax=sharedPreferences.getInt("valmax",20)
+        sumas=sharedPreferences.getBoolean("sumas",true)
+        restas=sharedPreferences.getBoolean("restas",true)
+        multiplicacion=sharedPreferences.getBoolean("multiplicaciones",true)
+        division=sharedPreferences.getBoolean("divisiones",true)
+
+
+
+
+        drcntras.doAfterTextChanged {
+            if (!drcntras.text.isNullOrBlank()) {
+                if (!drcntras.text!!.isDigitsOnly()){
+                    drcntras.error="Debes introducir un número entero"
+                }else{
+                    durcntatras=drcntras.text.toString().toLong()*1000
+                }
+            }
+        }
+
+        vlmin.doAfterTextChanged {
+            if (!vlmin.text.isNullOrBlank()) {
+                if (!vlmin.text!!.isDigitsOnly()){
+                    vlmin.error="Debes introducir un número entero"
+                }else{
+                    val valorIngresado = vlmin.text.toString().toInt()
+
+                    if (valorIngresado == 0) {
+                        vlmin.error="Debe ser mayor de 0"
+                    }else {
+                        valmin = vlmin.text.toString().toInt()
+                    }
+                }
+            }
+        }
+
+        vlmax.doAfterTextChanged {
+            if (!vlmax.text.isNullOrBlank()) {
+                if (!vlmax.text!!.isDigitsOnly()) {
+                    vlmax.error = "Debes introducir un número entero"
+                } else {
+                    val valorIngresado = vlmax.text.toString().toInt()
+
+                    if (valorIngresado == 0) {
+                        vlmax.error = "Debe ser mayor de 0"
+                    } else {
+                        valmax = valorIngresado + 1
+                    }
+                }
+            }
+        }
+
+
+        if (sumas){
+            checksumas.isChecked=true
+        }
+        if (restas){
+            checkrestas.isChecked=true
+        }
+        if (multiplicacion){
+            checkmultiplicaciones.isChecked=true
+        }
+        if (division){
+            checkdivisiones.isChecked=true
+        }
+
+        if (!checksumas.isChecked && !checkrestas.isChecked && !checkmultiplicaciones.isChecked && !checkdivisiones.isChecked){
+            sumas=true
+            restas=true
+            checksumas.isChecked=true
+            checkrestas.isChecked=true
+        }
+
+
+        numero1 = Random.nextInt(from = valmin, until = valmax)
+        numero2 = Random.nextInt(from = valmin, until = valmax)
+        var aux=0
+        if (numero1<numero2){
+            aux=numero1
+            numero1=numero2
+            numero2=aux
+        }
+        while (res==0) {
+            operaciones = Random.nextInt(3)
+            if (operaciones == 0 && sumas) {
+                resultado.text = "$numero1 + $numero2"
+                res = numero1 + numero2
+            } else if (operaciones == 1 && restas) {
+                resultado.text = "$numero1 - $numero2"
+                res = numero1 - numero2
+            } else if (operaciones == 2 && multiplicacion) {
+                resultado.text = "$numero1 * $numero2"
+                res = numero1 * numero2
+            } else if (operaciones == 3 && division && numero2==0) {
+                resultado.text = "$numero1 / $numero2"
+                res = numero1 / numero2
+            }
+        }
+        operacion()
+        empezarTemporizador(durcntatras)
+        acertadas=sharedPreferences.getInt("aciertos",0)
+        falladas=sharedPreferences.getInt("fallos",0)
 
     }
 
-    lateinit var cartaActual:ImageView
-    lateinit var cartaAnterior:ImageView
-    var posicionAnterior:Int? = null
-    var contador = 0
-    fun cartaPulsada(view: View) {
-            if (::cartaActual.isInitialized) {
-                cartaAnterior = cartaActual
+    fun pulsado(view: View) {
+        if (!ajustesact) {
+            when (view.id) {
+                R.id.cero -> {
+                    numero += "0"
+                    tutext.text = numero
+                }
+
+                R.id.uno -> {
+                    numero += "1"
+                    tutext.text = numero
+                }
+
+                R.id.dos -> {
+                    numero += "2"
+                    tutext.text = numero
+                }
+
+                R.id.tres -> {
+                    numero += "3"
+                    tutext.text = numero
+                }
+
+                R.id.cuatro -> {
+                    numero += "4"
+                    tutext.text = numero
+                }
+
+                R.id.cinco -> {
+                    numero += "5"
+                    tutext.text = numero
+                }
+
+                R.id.seis -> {
+                    numero += "6"
+                    tutext.text = numero
+                }
+
+                R.id.siete -> {
+                    numero += "7"
+                    tutext.text = numero
+                }
+
+                R.id.ocho -> {
+                    numero += "8"
+                    tutext.text = numero
+                }
+
+                R.id.nueve -> {
+                    numero += "9"
+                    tutext.text = numero
+                }
+
+                R.id.ce -> {
+                    numeroint = 0
+                    numero = ""
+                    tutext.text = numero
+                }
+
+                R.id.c -> {
+                    if (!numero.equals("") || !numero.isNullOrBlank()) {
+                        numero = numero.substring(0, numero.length - 1)
+                        tutext.text = numero
+                    }
+                }
+
+                R.id.igual -> {
+                    if (numero != "" || !numero.isNullOrBlank()) {
+                        numeroint = numero.toInt()
+                        numero = ""
+                        tutext.text = numero
+                        respuesta = true
+                        resultadoant.text = resultado.text.toString() + " = $res"
+                        resultado.text = resultadoprox.text
+                        if (numeroint == res) {
+                            check.setImageResource(R.drawable.tickverde)
+                            acertadasesta++
+                            aciertos.text = "Aciertos: $acertadasesta\nFallos: $falladasesta"
+                            res = proxres
+                        } else {
+                            check.setImageResource(R.drawable.cruzroja)
+                            falladasesta++
+                            aciertos.text = "Aciertos: $acertadasesta\nFallos: $falladasesta"
+                            res = proxres
+                        }
+                        operacion()
+                    }
+                }
             }
-            cartaActual = view as ImageView
-
-            val posicion = when (view.id) {
-                R.id.carta1 -> 0
-                R.id.carta2 -> 1
-                R.id.carta3 -> 2
-                R.id.carta4 -> 3
-                R.id.carta5 -> 4
-                R.id.carta6 -> 5
-                R.id.carta7 -> 6
-                R.id.carta8 -> 7
-                R.id.carta9 -> 8
-                R.id.carta10 -> 9
-                R.id.carta11 -> 10
-                R.id.carta12 -> 11
-                else -> -1
-            }
-
-            if (!booleanos[posicion]) {
-                contador++
-                val cartanueva1 = view.findViewById<ImageView>(view.id)
-
-                cartanueva1.setImageResource(imagenes[posicion])
-                cartanueva1.tag = imagenes[posicion].toString()
-
-                booleanos[posicion] = true
-            }
-
-            if (::cartaAnterior.isInitialized && contador == 2) {
-                compararCartas(cartaAnterior, cartaActual, posicion, posicionAnterior!!)
-            } else {
-                posicionAnterior = posicion
-            }
-
+        }
     }
-    private fun compararCartas(cartaAnterior: ImageView, cartaActual: ImageView, posicion:Int, posicionAnterior:Int) {
-        val idAnterior = cartaAnterior.tag
-        val idActual = cartaActual.tag
-        var posicion = posicion
-        var posicionAnterior = posicionAnterior
 
-            if (idAnterior != idActual && contador == 2) {
-                if(vidas>0) {
-                cartaAnterior.postDelayed({
-                    Thread.sleep(500)
-                    cartaAnterior.setImageResource(R.drawable.parteatras)
-                    cartaActual.setImageResource(R.drawable.parteatras)
-                    booleanos[posicion] = false
-                    booleanos[posicionAnterior] = false
-                    contador = 0
-                    if(vidas==4){
-                        var img4=findViewById<ImageView>(R.id.imgVidas4)
-                        img4.setImageResource(R.drawable.corazon_roto)
-                    }
-                    if(vidas==3){
-                        var img=findViewById<ImageView>(R.id.imgVidas3)
-                        img.setImageResource(R.drawable.corazon_roto)
-                    }
-                    if(vidas==2){
-                        var img=findViewById<ImageView>(R.id.imgVidas2)
-                        img.setImageResource(R.drawable.corazon_roto)
-                    }
-                    if(vidas==1){
-                        var img=findViewById<ImageView>(R.id.imgVidas)
-                        img.setImageResource(R.drawable.corazon_roto)
-                    }
-                    vidas--
-                }, 0)
-        }else if (vidas==0){
-
-            mediaPlayer?.stop()
-           val intent= Intent(this, Perdedor::class.java)
-           startActivity(intent)
-
-
+    fun operacion(){
+        proxres=0
+        if(respuesta) {
+            respuesta=false
+            numero1 = Random.nextInt(from = valmin, until = valmax)
+            numero2 = Random.nextInt(from = valmin, until = valmax)
+            var aux=0
+            if (numero1<numero2){
+                aux=numero1
+                numero1=numero2
+                numero2=aux
+            }
+            while (proxres==0) {
+                operaciones = Random.nextInt(4)
+                if (operaciones == 0 && sumas) {
+                    proxres = numero1 + numero2
+                    resultadoprox.text = "$numero1 + $numero2"
+                } else if (operaciones == 1 && restas) {
+                    proxres = numero1 - numero2
+                    resultadoprox.text = "$numero1 - $numero2"
+                } else if (operaciones == 2 && multiplicacion) {
+                    proxres = numero1 * numero2
+                    resultadoprox.text = "$numero1 * $numero2"
+                } else if (operaciones == 3 && division && numero2==0) {
+                    proxres = numero1 / numero2
+                    resultadoprox.text = "$numero1 / $numero2"
+                }
+            }
+            tutext.text=numero
         }
-        }
-            else if (contador == 2) {
-                booleanos[posicion] = true
-                booleanos[posicionAnterior] = true
-                cartaAnterior.tag = null
-                contador = 0
-                contadorGanar++
-                if (contadorGanar == 6) {
-                    mediaPlayer?.stop()
-                    val intent= Intent(this, Ganador::class.java)
-                    startActivity(intent)
+    }
+
+    fun empezarTemporizador(tiempo:Long){
+        temporizador=object:CountDownTimer(tiempo,1000){
+            override fun onTick(millisUntilFinished: Long) {
+                cuentatras.text = (millisUntilFinished / 1000).toString()
+                tmprestante = millisUntilFinished
+                if (tmprestante<=5000){
+                    animacion(cuentatras,1.0f,0.9f,100)
                 }
             }
 
+            override fun onFinish() {
+                if (!temppause) {
+                    intent1 = Intent(applicationContext, Final::class.java)
+                    acertadas += acertadasesta
+                    falladas += falladasesta
+                    sharedPreferences.edit().apply {
+                        putInt("aciertos", acertadas)
+                        putInt("fallos", falladas)
+                        apply()
+                    }
+                    if (acertadasesta!=0 || falladasesta!=0) {
+                        intent1.putExtra("aciertosant", acertadasesta)
+                        intent1.putExtra("fallosant", falladasesta)
+                    }
+                    startActivity(intent1)
+                }
+
+            }
+        }
+        temporizador?.start()
     }
-    fun Reiniciar(view: View) {
-        mediaPlayer?.stop()
+
+    fun ajustes(view: View) {
+        var ajustes=findViewById<CardView>(R.id.panelajustes)
+        animacion(view,0.9f,1.0f,100)
+        if (ajustes.visibility==View.VISIBLE){
+            ajustes.visibility = View.GONE
+            empezarTemporizador(tmprestante)
+            temppause=false
+            ajustesact=false
+        }else {
+            animacion(ajustes,1.0f,0.95f,100)
+            ajustes.visibility = View.VISIBLE
+            ajustesact=true
+            temppause=true
+            temporizador!!.cancel()
+        }
+    }
+
+    fun animacion(view: View, tamñoX:Float,tamñoY:Float,duracion:Long){
+        view.animate().apply {
+            scaleX(tamñoX)
+            scaleY(tamñoX)
+            duration=duracion
+        }.withEndAction{
+            view.animate().apply {
+                scaleX(tamñoY)
+                scaleY(tamñoY)
+                duration=duracion
+            }
+        }
+    }
+
+    fun guardar(view: View) {
+        sharedPreferences.edit().apply {
+            putLong("cuentaatras",durcntatras)
+            putInt("valmin",valmin)
+            putInt("valmax",valmax)
+            putBoolean("sumas",sumas)
+            putBoolean("restas",restas)
+            putBoolean("multiplicaciones",multiplicacion)
+            putBoolean("divisiones",division)
+            apply()
+        }
         recreate()
+
     }
-    override fun onBackPressed() {
-        mediaPlayer?.stop()
-        val intent= Intent(this, MainActivity::class.java)
-        startActivity(intent)
+
+    fun check(view: View) {
+        when(view.id){
+            R.id.sumas ->{
+                sumas = !sumas
+
+            }
+            R.id.restas ->{
+                restas = !restas
+
+            }
+            R.id.multiplicaciones ->{
+                multiplicacion = !multiplicacion
+
+            }
+            R.id.divisiones ->{
+                division = !division
+
+            }
+        }
+
     }
-    override fun onStop() {
-        mediaPlayer?.stop()
-        super.onStop()
-    }
+
+
 }

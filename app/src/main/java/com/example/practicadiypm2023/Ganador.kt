@@ -19,13 +19,13 @@ class Ganador : AppCompatActivity() {
     }
     fun Reiniciar(view: View) {
         mediaPlayer?.stop()
-        val intent= Intent(this, Juego::class.java)
+        val intent= Intent(this, Juego1::class.java)
         startActivity(intent)
     }
 
     override fun onBackPressed() {
         mediaPlayer?.stop()
-        val intent= Intent(this, Juego::class.java)
+        val intent= Intent(this, Juego1::class.java)
         startActivity(intent)
     }
 
