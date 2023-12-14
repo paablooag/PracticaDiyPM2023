@@ -313,7 +313,6 @@ class Juego : AppCompatActivity() {
 
             override fun onFinish() {
                 if (!temppause) {
-                    intent1 = Intent(applicationContext, Final::class.java)
                     acertadas += acertadasesta
                     falladas += falladasesta
                     sharedPreferences.edit().apply {
